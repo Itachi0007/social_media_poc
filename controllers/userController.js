@@ -80,5 +80,5 @@ exports.getAllUsers = async (req, res) => {
 		var message = "No users found";
 		return res.send(message);
 	}
-	return res.send(user[0]);
+	return res.send(user);
 };
