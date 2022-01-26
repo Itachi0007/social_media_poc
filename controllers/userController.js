@@ -1,7 +1,6 @@
 const {response} = require("express");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-let sprintf = require("sprintf-js").sprintf;
 const db = require("../config/dbConfig").pool;
 
 exports.authenticate = async (req, res) => {
@@ -23,7 +22,7 @@ exports.authenticate = async (req, res) => {
 		following: user[0].following,
 	};
 	// generating access token
-	const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN, {expiresIn: "300s"});
+	const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: "300s"});
 	return res.send(accessToken);
 };
 
