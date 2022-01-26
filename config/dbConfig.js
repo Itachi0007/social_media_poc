@@ -3,9 +3,9 @@ const pgtools = require("pgtools");
 const {Client} = require("pg");
 
 const config = {
-	user: "zeomtlfzumumxz",
-	password: process.env.DATABASE_PASSWORD,
-	host: "ec2-3-227-15-75.compute-1.amazonaws.com",
+	user: "postgres",
+	password: "Ahmer@13",
+	host: "localhost",
 	port: 5432,
 };
 
@@ -26,7 +26,7 @@ const pool = new Pool({
 	password: config.password,
 	host: config.host,
 	port: config.port,
-	database: "duo1tjvtt56jh",
+	database: "notes-db",
 });
 
 pool.query(createUsersTable, (err, res) => {
