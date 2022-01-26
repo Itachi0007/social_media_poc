@@ -1,5 +1,17 @@
 const jwt = require("jsonwebtoken");
 
+module.exports = (app) => {
+	const userController = require("./controllers/userController");
+	const postController = require("./controllers/postController");
+
+	// perform user authentication and return a JWT token.
+	app.post("/api/authenticate", userController.authenticate);
+	app.post("/api/follow/:uid", authenticateToken, userController.follow);
+	app.post("/api/unfollow/:uid", authenticateToken, userController.unfollow);
+	app.get("/api/user", authenticateToken, userController.getUser);
+	app.get("/api/user/all", userController.getAllUsers);
+};
+
 function authenticateToken(req, res, next) {
 	// authenticate the user's token
 	const authHeader = req.headers["authorization"]; // getting the auth data from header
@@ -16,14 +28,3 @@ function authenticateToken(req, res, next) {
 		next();
 	});
 }
-
-module.exports = (app) => {
-	const userController = require("./controllers/userController");
-	const postController = require("./controllers/postController");
-
-	// perform user authentication and return a JWT token.
-	app.post("/api/authenticate", userController.authenticate);
-	app.post("/api/follow/:uid", authenticateToken, userController.follow);
-	app.post("/api/unfollow/:uid", authenticateToken, userController.unfollow);
-	app.get("/api/user", authenticateToken, userController.getUser);
-};

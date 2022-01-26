@@ -72,3 +72,13 @@ exports.getUser = async (req, res) => {
 	delete user[0].password;
 	return res.send(user[0]);
 };
+
+exports.getAllUsers = async (req, res) => {
+	// validate request
+	const user = await (await db.query("SELECT * FROM users")).rows;
+	if (user.length == 0) {
+		var message = "No users found";
+		return res.send(message);
+	}
+	return res.send(user[0]);
+};
