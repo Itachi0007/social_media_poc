@@ -2,12 +2,14 @@ const Pool = require("pg").Pool;
 const pgtools = require("pgtools");
 const {Client} = require("pg");
 
-const config = {
-	user: "zeomtlfzumumxz",
-	password: process.env.DATABASE_PASSWORD,
-	host: "ec2-3-227-15-75.compute-1.amazonaws.com",
-	port: 5432,
-};
+const isProduction = process.env.NODE_ENV === "production";
+const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+const pool = new Pool({
+	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+	ssl: {
+		rejectUnauthorized: false,
+	},
+});
 
 const createUsersTable = `CREATE TABLE IF NOT EXISTS "users" (
 	    ID  SERIAL PRIMARY KEY,
@@ -20,14 +22,6 @@ const createUser1 =
 	"INSERT INTO users(email, password, followers, following) VALUES($1, $2, $3, $4) ON CONFLICT DO NOTHING";
 const createUser2 =
 	"INSERT INTO users(email, password, followers, following) VALUES($1, $2, $3, $4) ON CONFLICT DO NOTHING";
-
-const pool = new Pool({
-	user: config.user,
-	password: config.password,
-	host: config.host,
-	port: config.port,
-	database: "duo1tjvtt56jh",
-});
 
 pool.query(createUsersTable, (err, res) => {
 	console.log(err, res);
