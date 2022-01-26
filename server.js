@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const db = require("./config/database.config").pool;
+const db = require("./config/dbConfig").pool;
 
 // create express app
 const app = express();
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 // importing the routes
-require("./app/routes/note.routes.js")(app);
+require("./routes")(app);
 
 // select the port
 const port = process.env.PORT || 3000;
