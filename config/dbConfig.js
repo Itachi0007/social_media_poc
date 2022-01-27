@@ -1,5 +1,6 @@
 const Pool = require("pg").Pool;
 const pgtools = require("pgtools");
+require("dotenv").config();
 const {Client} = require("pg");
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -24,12 +25,19 @@ const createUser2 =
 	"INSERT INTO users(email, password, followers, following) VALUES($1, $2, $3, $4) ON CONFLICT DO NOTHING";
 
 pool.query(createUsersTable, (err, res) => {
-	console.log(err, res);
+	if (err) {
+		console.log("could not create table USERS");
+	}
+	console.log(res);
 	pool.query(createUser1, ["ahmer@123.com", "abcd", 0, 0], (err, res) => {
-		console.log(err, res);
+		if (!err) {
+			console.log("Added user Ahmer");
+		}
 	});
-	pool.query(createUser2, ["mallu@234.com", "1234", 0, 0], (err, res) => {
-		console.log(err, res);
+	pool.query(createUser2, ["max@234.com", "1234", 0, 0], (err, res) => {
+		if (!err) {
+			console.log("Added user Max");
+		}
 	});
 });
 

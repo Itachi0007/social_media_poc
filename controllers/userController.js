@@ -32,7 +32,6 @@ exports.follow = async (req, res) => {
 	var newFollowingCount = req.user.following + 1;
 	var followingId = req.params.uid;
 	const userToBeFollowed = await (await db.query("SELECT * FROM users WHERE id = $1", [followingId])).rows;
-	console.log(followingId);
 	if (userToBeFollowed.length == 0) {
 		var message = "User not found";
 		return res.send(message);
@@ -79,5 +78,8 @@ exports.getAllUsers = async (req, res) => {
 		var message = "No users found";
 		return res.send(message);
 	}
+	user.forEach((object) => {
+		delete object["password"];
+	});
 	return res.send(user);
 };

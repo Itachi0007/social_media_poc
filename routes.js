@@ -19,7 +19,7 @@ function authenticateToken(req, res, next) {
 	if (!token) {
 		return res.status(401).json("PLEASE PASS A TOKEN");
 	}
-	jwt.verify(token, process.env.ACCESS_TOKEN, (err, payload) => {
+	jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
 		if (err) {
 			return res.status(403).json("Invalid token passed");
 		}
