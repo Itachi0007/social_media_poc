@@ -1,5 +1,4 @@
 const Pool = require("pg").Pool;
-const pgtools = require("pgtools");
 require("dotenv").config();
 const {Client} = require("pg");
 
